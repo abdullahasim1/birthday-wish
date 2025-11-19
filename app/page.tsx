@@ -90,15 +90,20 @@ const FloatingBackground = () => {
       ref={containerRef}
       className="fixed inset-0 pointer-events-none overflow-hidden z-0"
     >
+      {/* Generate per-icon CSS rules instead of inline styles */}
+      <style>
+        {icons
+          .map(
+            (icon) =>
+              `.floating-icon.icon-${icon.id} { top: ${icon.top}%; left: ${icon.left}%; font-size: ${icon.size}rem; }`
+          )
+          .join("\n")}
+      </style>
+
       {icons.map((icon) => (
         <div
           key={icon.id}
-          className="floating-icon absolute text-white/10"
-          style={{
-            top: `${icon.top}%`,
-            left: `${icon.left}%`,
-            fontSize: `${icon.size}rem`,
-          }}
+          className={`floating-icon icon-${icon.id} absolute text-white/10`}
         >
           {icon.type === 0 ? (
             <Star />
